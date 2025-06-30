@@ -77,7 +77,9 @@ function TodoForm({ onSubmit, initialData, onCancel }) {
         </div>
         {dateError && <div style={{color:'#dc2626', marginBottom:'6px'}}>{dateError}</div>}
         <select value={priority} onChange={(e) => setPriority(Number(e.target.value))}>
-          {[1, 2, 3, 4, 5].map(p => <option key={p} value={p}>Priority {p}</option>)}
+          <option value={1}>Low</option>
+          <option value={2}>Medium</option>
+          <option value={3}>High</option>
         </select>
         <button type="submit">{initialData ? 'Save Changes' : 'Add Task'}</button>
         {initialData && (

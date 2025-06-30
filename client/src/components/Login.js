@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PasswordInput from './PasswordInput';
 import { useAuth } from '../AuthContext';
 
 function Login({ onSuccess, onShowRegister }) {
@@ -35,7 +36,7 @@ function Login({ onSuccess, onShowRegister }) {
       </div>
       <div>
         <label>Password</label>
-        <input type="password" value={password} onChange={e => setPassword(e.target.value)} required />
+        <PasswordInput value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" name="password" required />
       </div>
       <button type="submit">Login</button>
       <div style={{marginTop:8, textAlign:'center'}}>

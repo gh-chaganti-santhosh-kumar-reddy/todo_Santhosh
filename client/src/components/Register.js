@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PasswordInput from './PasswordInput';
 import { useNavigate } from 'react-router-dom';
 
 function Register({ onSuccess }) {
@@ -65,7 +66,7 @@ function Register({ onSuccess }) {
       </div>
       <div>
         <label>Password</label>
-        <input type="password" value={password} onChange={e => setPassword(e.target.value)} required />
+        <PasswordInput value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" name="password" required />
       </div>
       <button type="submit">Register</button>
       <div style={{marginTop:8, textAlign:'center'}}>

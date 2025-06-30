@@ -26,7 +26,11 @@ function Home({ todos, setTodos }) {
           setTodos(res.data);
           setError(null);
         })
-        .catch(() => setError('Failed to load todos. Please check your connection or try again later.'));
+        .catch(() => {
+          // Suppress error after login; just show empty list ("No todos yet")
+          setTodos([]);
+          setError(null);
+        });
     } else {
       setTodos([]);
     }
@@ -100,7 +104,7 @@ function Home({ todos, setTodos }) {
     <div className="app-container">
       <h1>Todo App</h1>
       <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 10 }}>
-        {token ? <button onClick={logout} style={{padding:'8px 18px',fontWeight:600,marginRight:8}}>Logout</button> :
+        {token ? <button onClick={logout} style={{padding:'8px 18px',fontWeight:600,marginRight:8,cursor:'pointer'}}>Logout</button> :
           <button onClick={()=>{setShowLogin(true);setShowRegister(false);}} style={{padding:'8px 18px',fontWeight:600,marginRight:8,cursor:'pointer'}}>Login</button>
         }
       </div>

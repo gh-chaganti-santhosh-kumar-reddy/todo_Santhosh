@@ -59,7 +59,7 @@ function TodoList({ todos, onToggle, onDelete, onEdit, showDetailsLink }) {
               ) : (
                 <strong>{todo.title}</strong>
               )}
-              {' '} (Priority: {todo.priority})
+              {' '} (Priority: {todo.priority === 1 ? 'Low' : todo.priority === 2 ? 'Medium' : 'High'})
             </div>
             <div>
               <button onClick={() => onToggle(todo)}>{todo.isCompleted ? 'Undo' : 'Complete'}</button>

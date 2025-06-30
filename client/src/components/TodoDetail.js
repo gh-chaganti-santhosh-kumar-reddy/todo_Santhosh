@@ -9,7 +9,7 @@ export default function TodoDetail({ todo }) {
       <h2 style={{color:'#4f46e5'}}>{todo.title}</h2>
       <p><strong>Description:</strong> {todo.description || 'No description'}</p>
       <p><strong>Due Date:</strong> {todo.dueDate ? new Date(todo.dueDate).toLocaleString() : 'N/A'}</p>
-      <p><strong>Priority:</strong> {todo.priority}</p>
+      <p><strong>Priority:</strong> {todo.priority === 1 ? 'Low' : todo.priority === 2 ? 'Medium' : 'High'}</p>
       <p><strong>Status:</strong> {todo.isCompleted ? 'Completed' : 'Incomplete'}</p>
       <div style={{display:'flex',gap:12,marginTop:24}}>
         <button 
