@@ -171,3 +171,4 @@ C:\Users\91918\Desktop\LTITrumio\todo_Santhosh\server\todo_app\bin\Debug\net9.0\
 C:\Users\91918\Desktop\LTITrumio\todo_Santhosh\server\todo_app\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\Users\91918\Desktop\LTITrumio\todo_Santhosh\server\todo_app\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\Users\91918\Desktop\LTITrumio\todo_Santhosh\server\todo_app\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\91918\Desktop\LTITrumio\todo_Santhosh\server\todo_app\obj\Debug\net9.0\todo_app.sourcelink.json
