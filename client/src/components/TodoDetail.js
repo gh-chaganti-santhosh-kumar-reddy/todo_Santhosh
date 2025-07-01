@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default function TodoDetail({ todo }) {
+export default function TodoDetail({ todo, onEdit }) {
   const navigate = useNavigate();
   if (!todo) return <div>Task not found.</div>;
   return (
@@ -19,7 +19,7 @@ export default function TodoDetail({ todo }) {
         </button>
         <button 
           style={{background:'#6366f1',color:'#fff',padding:'10px 22px',borderRadius:8,border:'none',fontWeight:600,cursor:'pointer',fontSize:'1rem'}} 
-          onClick={() => navigate(`/?edit=${todo.id}`)}>
+          onClick={() => { if (onEdit) { onEdit(todo); navigate('/'); } }}>
           Edit
         </button>
       </div>

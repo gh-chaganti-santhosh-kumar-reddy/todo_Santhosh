@@ -9,14 +9,15 @@ import Login from './components/Login';
 import Register from './components/Register';
 import TodoDetail from './components/TodoDetail';
 
-function Home({ todos, setTodos }) {
+import { useNavigate } from 'react-router-dom';
+function Home({ todos, setTodos, editingTodo, setEditingTodo, handleEdit }) {
   const { token, logout } = useAuth();
+  const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [statusFilter, setStatusFilter] = useState('all');
   const [dueDateFilter, setDueDateFilter] = useState('');
-  const [editingTodo, setEditingTodo] = useState(null);
   const location = window.location;
 
   useEffect(() => {
@@ -49,7 +50,7 @@ function Home({ todos, setTodos }) {
       .catch(() => setError('Failed to add todo.'));
   };
 
-  const handleEdit = (todo) => setEditingTodo(todo);
+  // Use handleEdit from props
   const handleEditSave = (updatedTodo) => {
     if (!token) {
       setError('You must be logged in to edit a todo.');
@@ -100,11 +101,18 @@ function Home({ todos, setTodos }) {
     window.history.replaceState({}, '', '/');
   }
 
+  // Enhanced logout: clear editing and go home
+  const handleLogout = () => {
+    logout();
+    setEditingTodo(null);
+    navigate('/');
+  };
+
   return (
     <div className="app-container">
       <h1>Todo App</h1>
       <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 10 }}>
-        {token ? <button onClick={logout} style={{padding:'8px 18px',fontWeight:600,marginRight:8,cursor:'pointer'}}>Logout</button> :
+        {token ? <button onClick={handleLogout} style={{padding:'8px 18px',fontWeight:600,marginRight:8,cursor:'pointer'}}>Logout</button> :
           <button onClick={()=>{setShowLogin(true);setShowRegister(false);}} style={{padding:'8px 18px',fontWeight:600,marginRight:8,cursor:'pointer'}}>Login</button>
         }
       </div>
@@ -143,7 +151,7 @@ function Home({ todos, setTodos }) {
   );
 }
 
-function TodoDetailWrapper({ todos }) {
+function TodoDetailWrapper({ todos, onEdit }) {
   const { id } = useParams();
   const [todo, setTodo] = useState(() => todos.find(t => String(t.id) === String(id)));
   const [loading, setLoading] = useState(!todo);
@@ -171,17 +179,19 @@ function TodoDetailWrapper({ todos }) {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
-  return <TodoDetail todo={todo} />;
+  return <TodoDetail todo={todo} onEdit={onEdit} />;
 }
 
 export default function App() {
   const [todos, setTodos] = useState([]);
+  const [editingTodo, setEditingTodo] = useState(null);
+  const handleEdit = (todo) => setEditingTodo(todo);
   return (
     <AuthProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<Home todos={todos} setTodos={setTodos} />} />
-          <Route path="/task/:id" element={<TodoDetailWrapper todos={todos} />} />
+          <Route path="/" element={<Home todos={todos} setTodos={setTodos} editingTodo={editingTodo} setEditingTodo={setEditingTodo} handleEdit={handleEdit} />} />
+          <Route path="/task/:id" element={<TodoDetailWrapper todos={todos} onEdit={handleEdit} />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>

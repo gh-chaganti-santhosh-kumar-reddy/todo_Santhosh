@@ -274,4 +274,20 @@ li button:hover {
   .app-container {
     padding: 16px 4px 12px 4px;
   }
+  li {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  li > div:last-child {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+  }
+  li button {
+    margin-left: 0;
+    margin-right: 6px;
+    margin-bottom: 6px;
+    min-width: 90px;
+  }
 }

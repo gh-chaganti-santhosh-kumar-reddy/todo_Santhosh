@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { getToken } from './authToken';
 
-const API = window.location.protocol === 'https:' 
-  ? 'https://localhost:7081/api/todos' 
-  : 'http://localhost:5031/api/todos';
+// Use .env for API base URL so mobile and desktop both work
+const API = process.env.REACT_APP_API_URL || (window.location.protocol === 'https:'
+  ? 'https://localhost:7081/api/todos'
+  : 'http://localhost:5031/api/todos');
 
 const authHeader = () => {
   const token = getToken();

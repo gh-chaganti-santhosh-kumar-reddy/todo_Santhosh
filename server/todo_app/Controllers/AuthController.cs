@@ -26,8 +26,9 @@ namespace TodoApp.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
-            var user = new IdentityUser { UserName = model.Username, Email = model.Email };
-            var result = await _userManager.CreateAsync(user, model.Password);
+            var user = new IdentityUser { UserName = model.Username ?? string.Empty, Email = model.Email };
+            var password = model.Password ?? string.Empty;
+            var result = await _userManager.CreateAsync(user, password);
             if (result.Succeeded)
                 return Ok();
             return BadRequest(result.Errors);
@@ -36,9 +37,10 @@ namespace TodoApp.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
-            var user = await _userManager.FindByNameAsync(model.Username);
+            var user = await _userManager.FindByNameAsync(model.Username ?? string.Empty);
             if (user == null) return Unauthorized();
-            var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
+            var password = model.Password ?? string.Empty;
+            var result = await _signInManager.CheckPasswordSignInAsync(user, password, false);
             if (!result.Succeeded) return Unauthorized();
             var token = GenerateJwtToken(user);
             return Ok(new { token });

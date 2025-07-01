@@ -21,7 +21,7 @@ namespace TodoApp.Controllers
             _userManager = userManager;
         }
 
-        private string GetUserId() => User.FindFirstValue(ClaimTypes.NameIdentifier);
+        private string GetUserId() => User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodos() =>
@@ -35,8 +35,10 @@ namespace TodoApp.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<TodoItem>> PostTodo(TodoItem todo)
+        public async Task<ActionResult<TodoItem>> PostTodo([FromBody] TodoItem todo)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
             todo.UserId = GetUserId();
             _context.TodoItems.Add(todo);
             await _context.SaveChangesAsync();
@@ -47,6 +49,8 @@ namespace TodoApp.Controllers
         public async Task<IActionResult> PutTodo(int id, TodoItem todo)
         {
             if (id != todo.Id) return BadRequest();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
             var existing = await _context.TodoItems.FirstOrDefaultAsync(t => t.Id == id && t.UserId == GetUserId());
             if (existing == null) return NotFound();
             // Update fields
